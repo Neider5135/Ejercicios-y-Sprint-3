@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
+    ">
+</head>
+
+<body>
+    <div class="aplicación 1">
+        <h3>Aplicación 1</h3>
+        <div class="imc">
+            <form>
+                <label>Estatura
+                    <p>en centímetros</p>
+                </label>
+                <input type="text" name="Estatura" id="estatura" placeholder="Estatura CM">
+                <label>Peso
+                    <p>en kilogramos</p>
+                </label>
+                <input type="text" name="Peso" id="peso" placeholder="Peso KG">
+                <input class="submit" type="submit" value="Calular">
+            </form>
+            <form class="resultado">
+                <label>Resultado:</label>
+                <input type="text" id="resultado" disabled placeholder="Resultado">
+            </form>
+        </div>
+    </div>
+    <div class="aplicación 2">
+        <h3>Aplicación 2</h3>
+        <div class="Conversor">
+            <form id="conversor">
+                <label>COP</label>
+                <input type="text" id="cop" class="peso" value="4004.73">
+                <label>USD</label>
+                <input type="text" id="usd" class="usd" value="1">
+            </form>
+        </div>
+    </div>
+    <div class="aplicación 3">
+        <h3>Aplicación 3</h3>
+        <div class="notas">
+            <div>
+                <form>
+                    <label>Nueva nota</label>
+                    <input type="text" placeholder="Título" id="titulo" name="Titulo">
+                    <textarea placeholder="Escriba aquí su nota" id="texto" name="Texto"></textarea>
+                    <input type="submit" value="Crear">
+                    <button id="Borrar">Borrar</button>
+                </form>
+            </div>
+            <div>
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner" id="carruselPrincipal">
+                      
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js
+    "></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>
