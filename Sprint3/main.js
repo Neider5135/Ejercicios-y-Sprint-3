@@ -1,5 +1,5 @@
 const data = {
-    currentDate: "2023-01-01",
+  currentDate: "2023-01-01",
   events: [
     {
       _id: "639c723b992482e5f2834be9",
@@ -193,27 +193,26 @@ const data = {
       __v: 0,
     },
   ],
-}
+};
 
-let carrusel = document.getElementById("carouselPrincipal")
+let carrusel = document.getElementById("carouselPrincipal");
+for (let i = 0; i < data.events.length; i += 4) {
+  let carruselItem;
+  if (i < 4) {
+    carruselItem = document.createElement("div");
+    carruselItem.classList.add("carousel-item", "active");
+  } else {
+    carruselItem = document.createElement("div");
+    carruselItem.classList.add("carousel-item");
+  }
+  let contenedor = document.createElement("div");
+  contenedor.classList.add("d-flex", "justify-content-around");
 
-for (let i = 0; i < data.events.length; i+=4) {
-    let carruselItem 
-    if (i < 4 ) {
-        carruselItem = document.createElement("div")
-        carruselItem.classList.add("carousel-item","active")
-    } else {
-        carruselItem = document.createElement("div") 
-        carruselItem.classList.add("carousel-item")
-    }
-    let contenedor = document.createElement("div")
-    contenedor.classList.add("d-flex","justify-content-around")
-
-    for (let j = i; j < i + 4; j++) {
-        if (data.events[j] != undefined) {
-            let card = document.createElement("div")
-            card.classList.add("card", "tamañoCartas")
-            card.innerHTML = `
+  for (let j = i; j < i + 4; j++) {
+    if (data.events[j] != undefined) {
+      let card = document.createElement("div");
+      card.classList.add("card", "tamañoCartas");
+      card.innerHTML = `
             <div class="imgCardSizing">
             <img src="${data.events[j].image}" class="card-img-top" alt="...">
             </div>
@@ -224,12 +223,28 @@ for (let i = 0; i < data.events.length; i+=4) {
             <div class="card-body cardEnd">
             <p>Price: ${data.events[j].price}</p>
             <a href="/Details.html" class="button">Details</a>
-            </div>`
-            console.log(card);
-            contenedor.appendChild(card)
-        }   
+            </div>`;
+      console.log(card);
+      contenedor.appendChild(card);
     }
-    carruselItem.appendChild(contenedor)
-    carrusel.appendChild(carruselItem)
+  }
+  carruselItem.appendChild(contenedor);
+  carrusel.appendChild(carruselItem);
+}
 
+let categories = document.getElementById("category");
+let categoriesin = []
+for (let k = 0; k < data.events.length; k++) {
+  if (categoriesin.includes(data.events[k].category)) {
+    continue;
+  } else {
+    categoryElement = document.createElement("div");
+    categoryElement.classList.add("form-check", "form-check-inline");
+    categoryElement.innerHTML = `
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox${k}" value="option${k}">
+  <label class="form-check-label" for="inlineCheckbox${k}">${data.events[k].category}</label>
+  `;
+    categories.appendChild(categoryElement);
+    categoriesin.push(data.events[k].category)
+  }
 }
