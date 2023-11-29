@@ -1,5 +1,5 @@
 const data = {
-    currentDate: "2023-01-01",
+  currentDate: "2023-01-01",
   events: [
     {
       _id: "639c723b992482e5f2834be9",
@@ -193,52 +193,137 @@ const data = {
       __v: 0,
     },
   ],
-}
-let pastEvents = []
-let upcomingEvents = []
-for (let a = 0; a < data.events.length; a++) {
-    if (data.events[a].date > data.currentDate) {
-        pastEvents.push(data.events[a])
-    } else {
-        upcomingEvents.push(data.events[a])
-    }
-}
+};
 
-let carrusel = document.getElementById("carouselPrincipal")
+let pastEvents = [];
 
-for (let i = 0; i < pastEvents.length; i+=4) {
-    let carruselItem 
-    if (i < 4 ) {
-        carruselItem = document.createElement("div")
-        carruselItem.classList.add("carousel-item","active")
+let upcomingEvents = [];
+
+let categories = document.getElementById("category");
+
+let carrusel = document.getElementById("carouselPrincipal");
+
+let categoryElement = document.createElement("div");
+
+function drawCards(array, where) {
+  where.innerHTML = "";
+  for (let i = 0; i < array.length; i += 4) {
+    let carruselItem;
+    if (i < 4) {
+      carruselItem = document.createElement("div");
+      carruselItem.classList.add("carousel-item", "active");
     } else {
-        carruselItem = document.createElement("div") 
-        carruselItem.classList.add("carousel-item")
+      carruselItem = document.createElement("div");
+      carruselItem.classList.add("carousel-item");
     }
-    let contenedor = document.createElement("div")
-    contenedor.classList.add("d-flex","justify-content-around")
+    let contenedor = document.createElement("div");
+    contenedor.classList.add("d-flex", "justify-content-around");
 
     for (let j = i; j < i + 4; j++) {
-        if (pastEvents[j] != undefined) {
-            let card = document.createElement("div")
-            card.classList.add("card", "tamañoCartas")
-            card.innerHTML = `
+      if (array[j] != undefined) {
+        let card = document.createElement("div");
+        card.classList.add("card", "tamañoCartas");
+        card.innerHTML = `
             <div class="imgCardSizing">
-            <img src="${pastEvents[j].image}" class="card-img-top" alt="...">
+            <img src="${array[j].image}" class="card-img-top" alt="...">
             </div>
             <div class="card-body">
-                <h5 class="card-title">${pastEvents[j].name}</h5>
-                <p class="card-text">${pastEvents[j].description}</p>
+                <h5 class="card-title">${array[j].name}</h5>
+                <p class="card-text">${array[j].description}</p>
             </div>
             <div class="card-body cardEnd">
-            <p>Price: ${pastEvents[j].price}</p>
+            <p>Price: ${array[j].price}</p>
             <a href="/Details.html" class="button">Details</a>
-            </div>`
-            console.log(card);
-            contenedor.appendChild(card)
-        }   
+            </div>`;
+        contenedor.appendChild(card);
+      }
     }
-    carruselItem.appendChild(contenedor)
-    carrusel.appendChild(carruselItem)
-
+    carruselItem.appendChild(contenedor);
+    where.appendChild(carruselItem);
+  }
 }
+
+function drawCategories() {
+  let categoriesin = [];
+  for (let k = 0; k < data.events.length; k++) {
+    if (categoriesin.includes(data.events[k].category)) {
+      continue;
+    } else {
+      categoryElement = document.createElement("div");
+      categoryElement.classList.add("form-check", "form-check-inline");
+      categoryElement.innerHTML = `
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox${
+    categoriesin.length + 1
+  }" value="${data.events[k].category}">
+  <label class="form-check-label" for="inlineCheckbox${
+    categoriesin.length + 1
+  }">${data.events[k].category}</label>
+  `;
+      categories.appendChild(categoryElement);
+      categoriesin.push(data.events[k].category);
+    }
+  }
+}
+
+function generalFilter(array) {
+  filterSearch(array);
+  categories.addEventListener("change", (e) => {
+    let cheked = Array.from(
+      document.querySelectorAll("input[type=checkbox]:checked")
+    ).map((e) => e.value);
+    filterCategories(array, cheked);
+  });
+}
+
+function filterCategories(array, arrayCategories) {
+  let lastArrayCat = array.filter((e) => arrayCategories.includes(e.category));
+  if (lastArrayCat.length == 0) {
+    drawCards(data.events, carrusel)
+    filterSearch(data.events);
+  } else {
+    filterSearch(lastArrayCat);
+  }
+}
+
+function filterSearch(array) {
+  let searchButton = document.getElementById("searchButton");
+  searchButton.addEventListener("click", (e) => {
+    let search = document.getElementById("search").value;
+    let lastArraySea = [];
+    for (let b = 0; b < array.length; b++) {
+      let finalFilter = array[b].name
+        .toLocaleLowerCase()
+        .indexOf(search.toLocaleLowerCase());
+      if (finalFilter != -1) {
+        lastArraySea.push(array[b]);
+      }
+    }
+    if (array.length == 0 && lastArraySea == 0) {
+      alert("No results found");
+    } else if (lastArraySea.length == 0 && !(search == "")) {
+      alert("No results found");
+    } else if (lastArraySea.length == 0) {
+      drawCards(array, carrusel);
+    } else {
+      drawCards(lastArraySea, carrusel);
+    }
+  });
+}
+
+function timeEvents(currentDate, array) {
+  for (let a = 0; a < data.events.length; a++) {
+    if (array[a].date > currentDate) {
+      pastEvents.push(array[a]);
+    } else {
+      upcomingEvents.push(array[a]);
+    }
+  }
+}
+
+timeEvents(data.currentDate, data.events)
+
+drawCards(pastEvents, carrusel);
+
+generalFilter(pastEvents);
+
+drawCategories();

@@ -261,7 +261,7 @@ function drawCategories() {
 }
 
 function generalFilter(array) {
-  filterSearch(array)
+  filterSearch(array);
   categories.addEventListener("change", (e) => {
     let cheked = Array.from(
       document.querySelectorAll("input[type=checkbox]:checked")
@@ -271,12 +271,10 @@ function generalFilter(array) {
 }
 
 function filterCategories(array, arrayCategories) {
-  let lastArrayCat = array.filter((e) =>
-    arrayCategories.includes(e.category)
-  );
-  console.log(lastArrayCat);
+  let lastArrayCat = array.filter((e) => arrayCategories.includes(e.category));
   if (lastArrayCat.length == 0) {
-    filterSearch(data.events)
+    drawCards(data.events, carrusel)
+    filterSearch(data.events);
   } else {
     filterSearch(lastArrayCat);
   }
@@ -286,16 +284,22 @@ function filterSearch(array) {
   let searchButton = document.getElementById("searchButton");
   searchButton.addEventListener("click", (e) => {
     let search = document.getElementById("search").value;
-    let lastArraySea = array.filter((e) =>
-      search.toLocaleLowerCase().includes(e.name.toLocaleLowerCase())
-    ); console.log(search);
-    if (array.length == 0 && lastArraySea == 0){
-      alert("No results found")
-    }else if(lastArraySea.length == 0 && !(search == "")){
-      alert("No results found")
-    }else if (lastArraySea.length == 0) {
+    let lastArraySea = [];
+    for (let b = 0; b < array.length; b++) {
+      let finalFilter = array[b].name
+        .toLocaleLowerCase()
+        .indexOf(search.toLocaleLowerCase());
+      if (finalFilter != -1) {
+        lastArraySea.push(array[b]);
+      }
+    }
+    if (array.length == 0 && lastArraySea == 0) {
+      alert("No results found");
+    } else if (lastArraySea.length == 0 && !(search == "")) {
+      alert("No results found");
+    } else if (lastArraySea.length == 0) {
       drawCards(array, carrusel);
-    } else{
+    } else {
       drawCards(lastArraySea, carrusel);
     }
   });
