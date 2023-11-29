@@ -196,44 +196,49 @@ const data = {
 };
 
 let carrusel = document.getElementById("carouselPrincipal");
-for (let i = 0; i < data.events.length; i += 4) {
-  let carruselItem;
-  if (i < 4) {
-    carruselItem = document.createElement("div");
-    carruselItem.classList.add("carousel-item", "active");
-  } else {
-    carruselItem = document.createElement("div");
-    carruselItem.classList.add("carousel-item");
-  }
-  let contenedor = document.createElement("div");
-  contenedor.classList.add("d-flex", "justify-content-around");
 
-  for (let j = i; j < i + 4; j++) {
-    if (data.events[j] != undefined) {
-      let card = document.createElement("div");
-      card.classList.add("card", "tamañoCartas");
-      card.innerHTML = `
+drawCards(data.events, carrusel);
+
+function drawCards(array, where) {
+  where.innerHTML = "";
+  for (let i = 0; i < array.length; i += 4) {
+    let carruselItem;
+    if (i < 4) {
+      carruselItem = document.createElement("div");
+      carruselItem.classList.add("carousel-item", "active");
+    } else {
+      carruselItem = document.createElement("div");
+      carruselItem.classList.add("carousel-item");
+    }
+    let contenedor = document.createElement("div");
+    contenedor.classList.add("d-flex", "justify-content-around");
+
+    for (let j = i; j < i + 4; j++) {
+      if (array[j] != undefined) {
+        let card = document.createElement("div");
+        card.classList.add("card", "tamañoCartas");
+        card.innerHTML = `
             <div class="imgCardSizing">
-            <img src="${data.events[j].image}" class="card-img-top" alt="...">
+            <img src="${array[j].image}" class="card-img-top" alt="...">
             </div>
             <div class="card-body">
-                <h5 class="card-title">${data.events[j].name}</h5>
-                <p class="card-text">${data.events[j].description}</p>
+                <h5 class="card-title">${array[j].name}</h5>
+                <p class="card-text">${array[j].description}</p>
             </div>
             <div class="card-body cardEnd">
-            <p>Price: ${data.events[j].price}</p>
+            <p>Price: ${array[j].price}</p>
             <a href="/Details.html" class="button">Details</a>
             </div>`;
-      console.log(card);
-      contenedor.appendChild(card);
+        contenedor.appendChild(card);
+      }
     }
+    carruselItem.appendChild(contenedor);
+    where.appendChild(carruselItem);
   }
-  carruselItem.appendChild(contenedor);
-  carrusel.appendChild(carruselItem);
 }
-
 let categories = document.getElementById("category");
-let categoriesin = []
+
+let categoriesin = [];
 for (let k = 0; k < data.events.length; k++) {
   if (categoriesin.includes(data.events[k].category)) {
     continue;
@@ -241,10 +246,46 @@ for (let k = 0; k < data.events.length; k++) {
     categoryElement = document.createElement("div");
     categoryElement.classList.add("form-check", "form-check-inline");
     categoryElement.innerHTML = `
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox${k}" value="option${k}">
-  <label class="form-check-label" for="inlineCheckbox${k}">${data.events[k].category}</label>
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox${
+    categoriesin.length + 1
+  }" value="${data.events[k].category}">
+  <label class="form-check-label" for="inlineCheckbox${
+    categoriesin.length + 1
+  }">${data.events[k].category}</label>
   `;
     categories.appendChild(categoryElement);
-    categoriesin.push(data.events[k].category)
+    categoriesin.push(data.events[k].category);
   }
 }
+
+function eventCheckbox(array) {
+  categories.addEventListener("change", (e) => {
+    let cheked = Array.from(
+      document.querySelectorAll("input[type=checkbox]:checked")
+    ).map((e) => e.value);
+    filterCategories(array, cheked);
+  });
+}
+
+function filterCategories(array, arrayCategories) {
+  let lastArrayCat = array.filter((e) => arrayCategories.includes(e.category));
+  drawCards(lastArrayCat, carrusel);
+  if (lastArrayCat.length == 0) {
+    drawCards(data.events, carrusel);
+  }
+}
+
+let urlParams = new URLSearchParams(window.location.search)
+
+function filterSearch (){
+let search = urlParams.get("search").toLocaleLowerCase()
+let lastArraySea = data.events.filter(e => search.includes(e.name.toLocaleLowerCase(), e.description.toLocaleLowerCase()));
+eventCheckbox(lastArraySea)
+if (lastArraySea == 0) {
+  drawCards (data.events, carrusel)
+}
+}
+
+//eventCheckbox(data.events)
+
+filterSearch()
