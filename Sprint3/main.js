@@ -194,10 +194,11 @@ const data = {
     },
   ],
 };
+let categories = document.getElementById("category");
 
 let carrusel = document.getElementById("carouselPrincipal");
 
-drawCards(data.events, carrusel);
+let categoryElement = document.createElement("div");
 
 function drawCards(array, where) {
   where.innerHTML = "";
@@ -236,16 +237,16 @@ function drawCards(array, where) {
     where.appendChild(carruselItem);
   }
 }
-let categories = document.getElementById("category");
 
-let categoriesin = [];
-for (let k = 0; k < data.events.length; k++) {
-  if (categoriesin.includes(data.events[k].category)) {
-    continue;
-  } else {
-    categoryElement = document.createElement("div");
-    categoryElement.classList.add("form-check", "form-check-inline");
-    categoryElement.innerHTML = `
+function drawCategories() {
+  let categoriesin = [];
+  for (let k = 0; k < data.events.length; k++) {
+    if (categoriesin.includes(data.events[k].category)) {
+      continue;
+    } else {
+      categoryElement = document.createElement("div");
+      categoryElement.classList.add("form-check", "form-check-inline");
+      categoryElement.innerHTML = `
   <input class="form-check-input" type="checkbox" id="inlineCheckbox${
     categoriesin.length + 1
   }" value="${data.events[k].category}">
@@ -253,12 +254,14 @@ for (let k = 0; k < data.events.length; k++) {
     categoriesin.length + 1
   }">${data.events[k].category}</label>
   `;
-    categories.appendChild(categoryElement);
-    categoriesin.push(data.events[k].category);
+      categories.appendChild(categoryElement);
+      categoriesin.push(data.events[k].category);
+    }
   }
 }
 
-function eventCheckbox(array) {
+function generalFilter(array) {
+  filterSearch(array)
   categories.addEventListener("change", (e) => {
     let cheked = Array.from(
       document.querySelectorAll("input[type=checkbox]:checked")
@@ -268,24 +271,38 @@ function eventCheckbox(array) {
 }
 
 function filterCategories(array, arrayCategories) {
-  let lastArrayCat = array.filter((e) => arrayCategories.includes(e.category));
-  drawCards(lastArrayCat, carrusel);
+  let lastArrayCat = array.filter((e) =>
+    arrayCategories.includes(e.category)
+  );
+  console.log(lastArrayCat);
   if (lastArrayCat.length == 0) {
-    drawCards(data.events, carrusel);
+    filterSearch(data.events)
+  } else {
+    filterSearch(lastArrayCat);
   }
 }
 
-let urlParams = new URLSearchParams(window.location.search)
-
-function filterSearch (){
-let search = urlParams.get("search").toLocaleLowerCase()
-let lastArraySea = data.events.filter(e => search.includes(e.name.toLocaleLowerCase(), e.description.toLocaleLowerCase()));
-eventCheckbox(lastArraySea)
-if (lastArraySea == 0) {
-  drawCards (data.events, carrusel)
+function filterSearch(array) {
+  let searchButton = document.getElementById("searchButton");
+  searchButton.addEventListener("click", (e) => {
+    let search = document.getElementById("search").value;
+    let lastArraySea = array.filter((e) =>
+      search.toLocaleLowerCase().includes(e.name.toLocaleLowerCase())
+    ); console.log(search);
+    if (array.length == 0 && lastArraySea == 0){
+      alert("No results found")
+    }else if(lastArraySea.length == 0 && !(search == "")){
+      alert("No results found")
+    }else if (lastArraySea.length == 0) {
+      drawCards(array, carrusel);
+    } else{
+      drawCards(lastArraySea, carrusel);
+    }
+  });
 }
-}
 
-//eventCheckbox(data.events)
+drawCards(data.events, carrusel);
 
-filterSearch()
+generalFilter(data.events);
+
+drawCategories();

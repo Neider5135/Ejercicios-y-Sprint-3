@@ -63,7 +63,6 @@ pintarTarjetas(notas, carrusel);
 document.getElementById("crear").addEventListener("click", crearNota)
 
 function crearNota() {
-    console.log("probando");
   titulo = document.getElementById("titulo").value;
   texto = document.getElementById("texto").value;
   if (titulo == "" || texto == "") {
