@@ -194,7 +194,6 @@ const data = {
     },
   ],
 }
-let pastEvents = [];
 
 let upcomingEvents = [];
 
@@ -290,11 +289,18 @@ function filterSearch(array) {
     let search = document.getElementById("search").value;
     let lastArraySea = [];
     for (let b = 0; b < array.length; b++) {
-      let finalFilter = array[b].name
-        .toLocaleLowerCase()
-        .indexOf(search.toLocaleLowerCase());
+      let finalFilter =
+        array[b].name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase())
       if (finalFilter != -1) {
         lastArraySea.push(array[b]);
+      }else{
+        for (let b = 0; b < array.length; b++) {
+          let finalFilter =
+            array[b].description.toLocaleLowerCase().indexOf(search.toLocaleLowerCase())
+          if (finalFilter != -1 && !(lastArraySea.includes(array[b]))) {
+            lastArraySea.push(array[b]);
+          }
+       }
       }
     }
     if (array.length == 0 && lastArraySea == 0) {
