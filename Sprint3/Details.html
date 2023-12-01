@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
 <header>
     <nav class="navbar bg-body-tertiary navbar-expand-lg">
         <div class="container">
@@ -40,7 +41,44 @@
             </div>
         </div>
     </nav>
+
+    <nav class="navbar bg-body-tertiary fixed-top navbar-expand-md secondNavbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.html">
+                <img src="Recursos_Amazing_Events_Task_1/amazing_brand.png" alt="Logo" height="24">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Amazing Events</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="UpcomingEvents.html">Upcoming events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="pastEvents.html">Past events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="Contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="Stats.html">Stats</a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
 </header>
+
 <main class="w-100 m-5 d-flex justify-content-center align-items-center">
     <div class="w-75 d-flex align-items-center justify-content-between">
         <img class="w-50" src="/Recursos_Amazing_Events_Task_1/food_fair.jpg" alt="Food Fair">
@@ -72,6 +110,7 @@
         </div>
     </div>
 </main>
+
 <footer class="container-fluid border-top border-dark-subtle d-flex align-items-center justify-content-between p-2">
     <ul class="d-flex justify-content-between">
         <li><img class="m-2" style="height: 5vw;" src="/Recursos_Amazing_Events_Task_1/facebook.png" alt="facebook"></li>
@@ -79,7 +118,7 @@
         <li><img class="m-2" style="height: 5vw;" src="/Recursos_Amazing_Events_Task_1/whatsapp.png" alt="whatsapp"></li>
     </ul>
     <div>
-            Cohort
+        By Neider Núñez
     </div>
 </footer>
 

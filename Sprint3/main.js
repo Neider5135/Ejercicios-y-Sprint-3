@@ -202,6 +202,9 @@ let categoryElement = document.createElement("div");
 
 function drawCards(array, where) {
   where.innerHTML = "";
+  if (array.length == 0) {
+    where.innerHTML = '<p class="noResults"> No results found </p>'
+  }
   for (let i = 0; i < array.length; i += 4) {
     let carruselItem;
     if (i < 4) {
@@ -212,7 +215,7 @@ function drawCards(array, where) {
       carruselItem.classList.add("carousel-item");
     }
     let contenedor = document.createElement("div");
-    contenedor.classList.add("d-flex", "justify-content-around");
+    contenedor.classList.add("d-flex", "justify-content-around", "containerCards");
 
     for (let j = i; j < i + 4; j++) {
       if (array[j] != undefined) {
@@ -286,29 +289,23 @@ function filterSearch(array) {
     let search = document.getElementById("search").value;
     let lastArraySea = [];
     for (let b = 0; b < array.length; b++) {
-      let finalFilter =
-        array[b].name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase())
+      let finalFilter = array[b].name
+        .toLocaleLowerCase()
+        .indexOf(search.toLocaleLowerCase());
       if (finalFilter != -1) {
         lastArraySea.push(array[b]);
-      }else{
+      } else {
         for (let b = 0; b < array.length; b++) {
-          let finalFilter =
-            array[b].description.toLocaleLowerCase().indexOf(search.toLocaleLowerCase())
-          if (finalFilter != -1 && !(lastArraySea.includes(array[b]))) {
+          let finalFilter = array[b].description
+            .toLocaleLowerCase()
+            .indexOf(search.toLocaleLowerCase());
+          if (finalFilter != -1 && !lastArraySea.includes(array[b])) {
             lastArraySea.push(array[b]);
           }
-       }
+        }
       }
     }
-    if (array.length == 0 && lastArraySea == 0) {
-      alert("No results found");
-    } else if (lastArraySea.length == 0 && !(search == "")) {
-      alert("No results found");
-    } else if (lastArraySea.length == 0) {
-      drawCards(array, carrusel);
-    } else {
-      drawCards(lastArraySea, carrusel);
-    }
+    drawCards(lastArraySea, carrusel);
   });
 }
 

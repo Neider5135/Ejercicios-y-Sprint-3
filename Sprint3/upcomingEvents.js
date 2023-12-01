@@ -195,6 +195,8 @@ const data = {
   ],
 }
 
+let pastEvents = []
+
 let upcomingEvents = [];
 
 let categories = document.getElementById("category");
@@ -215,7 +217,7 @@ function drawCards(array, where) {
       carruselItem.classList.add("carousel-item");
     }
     let contenedor = document.createElement("div");
-    contenedor.classList.add("d-flex", "justify-content-around");
+    contenedor.classList.add("d-flex", "justify-content-around", "containerCards");
 
     for (let j = i; j < i + 4; j++) {
       if (array[j] != undefined) {
