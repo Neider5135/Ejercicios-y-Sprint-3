@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+.brandLogo{
+    height: 3rem;
+}
+
+.navLink{
+    font-size: large;
+}
+
 .tamañoCartas{
     display: flex;
     flex-direction: column;
@@ -51,14 +59,6 @@ h1{
     position: absolute;
 }
 
-footer{
-    background-color: rgb(238, 238, 238);
-    height: 15vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .cardEnd{
     display: flex;
     align-items: center;
@@ -102,6 +102,18 @@ th, td {
     height: 62vh;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+.socialIcon{
+    height: 5vh;
+}
+
+footer{
+    background-color: rgb(238, 238, 238);
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 @media only screen and (min-width: 768px) {
