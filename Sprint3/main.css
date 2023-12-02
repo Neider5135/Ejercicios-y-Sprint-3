@@ -63,6 +63,16 @@ h1{
     position: absolute;
 }
 
+.contactForm{
+    width: 40vw;
+    height: 80vh;
+    justify-content: space-around;
+}
+
+.detailsInfo{
+    height: 78.5vh;
+}
+
 .cardEnd{
     display: flex;
     align-items: center;
